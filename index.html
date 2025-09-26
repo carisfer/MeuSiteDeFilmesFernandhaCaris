@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CineFlix</title>
+  <title>Catálogo de Filmes e Séries</title>
 
   <style>
     /* Estilos gerais */
@@ -19,120 +19,184 @@
       background-color: #111;
       padding: 15px;
       text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
     }
 
     .logo {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: bold;
-    }
-
-    h2 {
-      text-align: center;
-    }
-
-    /* Estilo do catálogo de filmes */
-    .catalogo {
-      padding: 20px;
-    }
-
-    .filmes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .filme {
-      width: 200px;
+      color: #e50914;
       cursor: pointer;
-      text-align: center;
-      transition: transform 0.3s;
     }
 
-    .filme img {
+    nav {
+      margin-top: 20px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    nav a:hover {
+      color: #e50914;
+    }
+
+    .carrossel-container {
+      position: relative;
       width: 100%;
-      border-radius: 8px;
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px 0;
     }
 
-    .filme h3 {
-      margin-top: 10px;
+    .carrossel {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      scroll-behavior: smooth;
     }
 
-    /* Efeito de hover para os filmes */
-    .filme:hover {
-      transform: scale(1.05);
+    .item {
+      position: relative;
+      width: 300px;
+      height: 450px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #222;
     }
 
-    /* Modal */
-    .modal {
-      display: none; /* Começa escondido */
-      position: fixed;
+    .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.3s;
+    }
+
+    .item h3 {
+      position: absolute;
+      bottom: 20px;
+      left: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+      z-index: 2;
+    }
+
+    .item .sinopse,
+    .item .classificacao {
+      position: absolute;
+      bottom: 5px;
+      left: 10px;
+      font-size: 14px;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 5px 10px;
+      border-radius: 5px;
+      z-index: 2;
+    }
+
+    .classificacao {
+      background-color: #e50914;
+    }
+
+    /* Carrossel de trailers */
+    .trailer {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      justify-content: center;
-      align-items: center;
+      background: rgba(0, 0, 0, 0.5);
     }
 
-    .modal-content {
-      background-color: #222;
-      padding: 20px;
-      border-radius: 8px;
-      width: 80%;
-      max-width: 900px;
-      color: white;
-      text-align: center;
-    }
-
-    .fechar {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      color: white;
-      font-size: 30px;
-      cursor: pointer;
+    .trailer iframe {
+      width: 100%;
+      height: 100%;
     }
 
     footer {
       background-color: #111;
       text-align: center;
       padding: 10px;
+      margin-top: 20px;
     }
+
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">Meu Catálogo</div>
+    <div class="logo">Catálogo de Filmes e Séries</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#filmes">Filmes</a>
+      <a href="#login">Login</a>
+      <a href="#series">Séries</a>
+    </nav>
   </header>
 
-  <main>
-    <section class="catalogo">
-      <h2>Catálogo de Filmes</h2>
-      <div class="filmes">
-        <!-- Lista de filmes -->
-        <div class="filme" onclick="mostrarDetalhes('filme1')">
-          <img src="filme1.jpg" alt="Filme 1">
-          <h3>Filme 1</h3>
+  <main id="home">
+    <!-- Carrossel de Filmes - Destaques da Semana -->
+    <div class="carrossel-container">
+      <h2>Destaques da Semana</h2>
+      <div class="carrossel" id="carrossel-filmes">
+        <!-- Itens do carrossel -->
+        <div class="item">
+          <div class="trailer">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+          <img src="https://m.media-amazon.com/images/I/51kAql9VYHL._AC_SY679_.jpg" alt="Megan">
+          <h3>Megan</h3>
+          <div class="sinopse">Megan é um robô de inteligência artificial que ganha vida.</div>
+          <div class="classificacao">18+</div>
         </div>
-        <div class="filme" onclick="mostrarDetalhes('filme2')">
-          <img src="filme2.jpg" alt="Filme 2">
-          <h3>Filme 2</h3>
-        </div>
-        <!-- Adicione mais filmes aqui -->
-      </div>
-    </section>
 
-    <!-- Modal para mostrar os detalhes do filme -->
-    <div id="detalhes" class="modal">
-      <div class="modal-content">
-        <span class="fechar" onclick="fecharModal()">&times;</span>
-        <h2 id="titulo-filme"></h2>
-        <p id="descricao-filme"></p>
-        <iframe id="trailer" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <h3>Avaliações:</h3>
-        <div id="avaliacoes"></div>
-        <h3>Comentários:</h3>
-        <div id="comentarios">
+        <!-- Adicione os outros filmes de forma similar -->
+        <div class="item">
+          <div class="trailer">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+          <img src="https://m.media-amazon.com/images/I/51kAql9VYHL._AC_SY679_.jpg" alt="Homem Aranha">
+          <h3>Homem-Aranha</h3>
+          <div class="sinopse">O herói aranha precisa enfrentar um vilão perigoso.</div>
+          <div class="classificacao">12+</div>
+        </div>
+
+        <!-- Continue adicionando mais filmes -->
+      </div>
+    </div>
+
+    <!-- Carrossel de Séries - Mais Assistidas -->
+    <div class="carrossel-container">
+      <h2>Séries Mais Assistidas</h2>
+      <div class="carrossel" id="carrossel-series">
+        <!-- Itens do carrossel -->
+        <div class="item">
+          <div class="trailer">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+          <img src="https://m.media-amazon.com/images/I/51kAql9VYHL._AC_SY679_.jpg" alt="La Casa de Papel">
+          <h3>La Casa de Papel</h3>
+          <div class="sinopse">A série de assaltos mais emocionante do mundo.</div>
+          <div class="classificacao">16+</div>
+        </div>
+
+        <!-- Continue adicionando mais séries -->
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Catálogo de Filmes e Séries</p>
+  </footer>
+
+</body>
+</html>
