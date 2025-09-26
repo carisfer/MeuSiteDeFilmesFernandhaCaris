@@ -1,11 +1,138 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineFlix</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineFlix</title>
+
+  <style>
+    /* Estilos gerais */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #141414;
+      color: white;
+    }
+
+    header {
+      background-color: #111;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    /* Estilo do catálogo de filmes */
+    .catalogo {
+      padding: 20px;
+    }
+
+    .filmes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .filme {
+      width: 200px;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .filme img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .filme h3 {
+      margin-top: 10px;
+    }
+
+    /* Efeito de hover para os filmes */
+    .filme:hover {
+      transform: scale(1.05);
+    }
+
+    /* Modal */
+    .modal {
+      display: none; /* Começa escondido */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #222;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 900px;
+      color: white;
+      text-align: center;
+    }
+
+    .fechar {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: #111;
+      text-align: center;
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
-    <h1>CineFlix - Seu catálogo de filmes online</h1>
-</body>
-</html>
+
+  <header>
+    <div class="logo">Meu Catálogo</div>
+  </header>
+
+  <main>
+    <section class="catalogo">
+      <h2>Catálogo de Filmes</h2>
+      <div class="filmes">
+        <!-- Lista de filmes -->
+        <div class="filme" onclick="mostrarDetalhes('filme1')">
+          <img src="filme1.jpg" alt="Filme 1">
+          <h3>Filme 1</h3>
+        </div>
+        <div class="filme" onclick="mostrarDetalhes('filme2')">
+          <img src="filme2.jpg" alt="Filme 2">
+          <h3>Filme 2</h3>
+        </div>
+        <!-- Adicione mais filmes aqui -->
+      </div>
+    </section>
+
+    <!-- Modal para mostrar os detalhes do filme -->
+    <div id="detalhes" class="modal">
+      <div class="modal-content">
+        <span class="fechar" onclick="fecharModal()">&times;</span>
+        <h2 id="titulo-filme"></h2>
+        <p id="descricao-filme"></p>
+        <iframe id="trailer" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <h3>Avaliações:</h3>
+        <div id="avaliacoes"></div>
+        <h3>Comentários:</h3>
+        <div id="comentarios">
