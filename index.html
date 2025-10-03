@@ -175,6 +175,40 @@
       height: 400px;
     }
 
+    /* Formulário de login */
+    .login-form {
+      width: 300px;
+      margin: 50px auto;
+      background-color: #222;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .login-form input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #333;
+      border: none;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .login-form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #ff0a0a;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-form button:hover {
+      background-color: #e50914;
+    }
+
   </style>
 </head>
 <body>
@@ -225,73 +259,61 @@
           <div class="sinopse">A história de amor a bordo do Titanic.</div>
           <div class="classificacao">10+</div>
         </div>
+        <!-- Mais filmes -->
+        <div class="item" onclick="openModal('madmax')">
+          <img src="https://upload.wikimedia.org/wikipedia/pt/f/f9/Mad_Max_Fury_Road.jpg" alt="Mad Max: Fury Road">
+          <h3>Mad Max: Fury Road</h3>
+          <div class="sinopse">A luta pela sobrevivência em um mundo pós-apocalíptico.</div>
+          <div class="classificacao">16+</div>
+        </div>
+        <div class="item" onclick="openModal('avengers')">
+          <img src="https://upload.wikimedia.org/wikipedia/pt/4/45/The_Avengers_2012_poster.jpg" alt="Avengers">
+          <h3>Avengers</h3>
+          <div class="sinopse">Os heróis mais poderosos da Terra unidos.</div>
+          <div class="classificacao">12+</div>
+        </div>
       </div>
+    </div>
+    
+    <!-- Formulário de Login -->
+    <div class="login-form" id="login">
+      <h3>Login</h3>
+      <input type="text" placeholder="Usuário" id="usuario">
+      <input type="password" placeholder="Senha" id="senha">
+      <button onclick="login()">Entrar</button>
     </div>
   </main>
 
-  <!-- Modal de Informações do Filme -->
+  <!-- Modal de Filme -->
   <div id="modal-inception" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('inception')">&times;</span>
       <h2>Inception (2010)</h2>
-      <p><strong>Descrição:</strong> Um ladrão especializado em extrair segredos através de sonhos é oferecido uma chance de redimir-se.</p>
+      <p><strong>Descrição:</strong> Um ladrão especializado em extrair segredos de sonhos.</p>
       <p><strong>Classificação:</strong> 12+</p>
-      <iframe src="https://www.youtube.com/embed/YoHD9XEInc0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe id="iframe-inception" src="https://www.youtube.com/embed/YoHD9XEInc0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
 
-  <!-- Adicionar modais para os outros filmes -->
-  <div id="modal-matrix" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('matrix')">&times;</span>
-      <h2>The Matrix (1999)</h2>
-      <p><strong>Descrição:</strong> A humanidade está aprisionada em uma realidade virtual controlada por máquinas.</p>
-      <p><strong>Classificação:</strong> 16+</p>
-      <iframe src="https://www.youtube.com/embed/vKQi3bBA1y8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
-
-  <div id="modal-interstellar" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('interstellar')">&times;</span>
-      <h2>Interstellar (2014)</h2>
-      <p><strong>Descrição:</strong> Um grupo de astronautas tenta salvar a humanidade explorando um buraco negro.</p>
-      <p><strong>Classificação:</strong> 12+</p>
-      <iframe src="https://www.youtube.com/embed/zSWdZVtXT7E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
-
-  <div id="modal-darkknight" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('darkknight')">&times;</span>
-      <h2>The Dark Knight (2008)</h2>
-      <p><strong>Descrição:</strong> Batman deve enfrentar o Coringa, um vilão caótico que quer destruir Gotham City.</p>
-      <p><strong>Classificação:</strong> 12+</p>
-      <iframe src="https://www.youtube.com/embed/EXeTwQWrcwY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
-
-  <div id="modal-titanic" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('titanic')">&times;</span>
-      <h2>Titanic (1997)</h2>
-      <p><strong>Descrição:</strong> Jack e Rose se apaixonam a bordo do Titanic, mas o navio afunda e a tragédia se desenrola.</p>
-      <p><strong>Classificação:</strong> 10+</p>
-      <iframe src="https://www.youtube.com/embed/2e-eXJ6HU9g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
+  <!-- Outros modais (filmes) aqui... -->
 
   <footer>
-    <p>© 2025 Catálogo de Filmes e Séries</p>
+    <p>© 2025 Cineflix</p>
   </footer>
 
   <script>
     function openModal(movie) {
       document.getElementById('modal-' + movie).style.display = "block";
+      document.getElementById('iframe-' + movie).src += "?autoplay=1"; // Inicia o vídeo automaticamente
     }
 
     function closeModal(movie) {
       document.getElementById('modal-' + movie).style.display = "none";
+      document.getElementById('iframe-' + movie).src = document.getElementById('iframe-' + movie).src.split('?')[0]; // Para o vídeo
+    }
+
+    function login() {
+      alert("Login realizado com sucesso!");
     }
   </script>
 
