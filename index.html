@@ -1,319 +1,429 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo de Filmes e Séries</title>
-
-  <style>
-    /* Estilos gerais */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #141414;
-      color: white;
-    }
-
-    header {
-      background-color: #111;
-      padding: 15px;
-      text-align: center;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 36px;
-      font-weight: bold;
-      color: #ff0a0a;
-      cursor: pointer;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    nav {
-      margin-top: 10px;
-    }
-
-    nav a {
-      margin: 0 20px;
-      color: #fff;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      color: #ff0a0a;
-      border-bottom: 2px solid #ff0a0a;
-      padding-bottom: 5px;
-      transition: all 0.3s ease;
-    }
-
-    .carrossel-container {
-      position: relative;
-      width: 100%;
-      max-width: 1200px;
-      margin: 150px auto 50px;
-      padding: 20px 0;
-    }
-
-    .carrossel {
-      display: flex;
-      overflow-x: auto;
-      gap: 15px;
-      scroll-behavior: smooth;
-    }
-
-    .item {
-      position: relative;
-      width: 240px;
-      height: 350px;
-      flex-shrink: 0;
-      border-radius: 10px;
-      overflow: hidden;
-      background-color: #222;
-      transition: transform 0.3s ease-in-out;
-      cursor: pointer;
-    }
-
-    .item:hover {
-      transform: scale(1.05);
-    }
-
-    .item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: opacity 0.3s ease;
-    }
-
-    .item h3 {
-      position: absolute;
-      bottom: 20px;
-      left: 10px;
-      font-size: 20px;
-      font-weight: bold;
-      color: #fff;
-      z-index: 2;
-      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
-    }
-
-    .item .sinopse,
-    .item .classificacao {
-      position: absolute;
-      bottom: 5px;
-      left: 10px;
-      font-size: 14px;
-      color: #fff;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 5px 10px;
-      border-radius: 5px;
-      z-index: 2;
-    }
-
-    .classificacao {
-      background-color: #e50914;
-    }
-
-    footer {
-      background-color: #111;
-      text-align: center;
-      padding: 10px;
-      margin-top: 20px;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.8);
-      padding-top: 60px;
-    }
-
-    .modal-content {
-      background-color: #222;
-      margin: 5% auto;
-      padding: 20px;
-      width: 80%;
-      border-radius: 10px;
-      color: white;
-    }
-
-    .modal-content h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    .close {
-      color: #aaa;
-      font-size: 28px;
-      font-weight: bold;
-      position: absolute;
-      right: 20px;
-      top: 15px;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: white;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .modal iframe {
-      width: 100%;
-      height: 400px;
-    }
-
-    /* Formulário de login */
-    .login-form {
-      width: 300px;
-      margin: 50px auto;
-      background-color: #222;
-      padding: 20px;
-      border-radius: 8px;
-    }
-
-    .login-form input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      background-color: #333;
-      border: none;
-      border-radius: 5px;
-      color: white;
-    }
-
-    .login-form button {
-      width: 100%;
-      padding: 10px;
-      background-color: #ff0a0a;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .login-form button:hover {
-      background-color: #e50914;
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINEFLIX - Seu streaming de filmes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #141414, #000);
+            color: white;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        .navbar {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            transition: background 0.3s;
+        }
+        .navbar.scrolled {
+            background: rgba(0,0,0,0.9);
+        }
+        .movie-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+            z-index: 10;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+        }
+        .modal-content {
+            background: #141414;
+            margin: 40px auto;
+            padding: 0;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
+        }
+        .comment {
+            border-left: 3px solid #e50914;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #e50914, #ff7b00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #e50914;
+        }
+    </style>
 </head>
-<body>
+<body class="min-h-screen">
 
-  <header>
-    <div class="logo">Cineflix</div>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#filmes">Filmes</a>
-      <a href="#login" onclick="toggleLoginForm()">Login</a>
-      <a href="#series">Séries</a>
+    <!-- Navbar -->
+    <nav class="navbar fixed w-full p-4 z-50 flex justify-between items-center">
+        <div class="flex items-center">
+            <h1 class="text-3xl font-bold gradient-text">CINEFLIX</h1>
+            <div class="ml-10 hidden md:flex space-x-6">
+                <a href="#" class="hover:text-red-500 transition">Início</a>
+                <a href="#" class="hover:text-red-500 transition">Séries</a>
+                <a href="#" class="hover:text-red-500 transition">Filmes</a>
+                <a href="#" class="hover:text-red-500 transition">Minha Lista</a>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="hover:text-red-500 transition">
+                <i class="fas fa-search text-xl"></i>
+            </button>
+            <button id="loginBtn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition">
+                Entrar
+            </button>
+        </div>
     </nav>
-  </header>
 
-  <main id="home">
-    <!-- Carrossel de Filmes - Destaques da Semana -->
-    <div class="carrossel-container">
-      <h2>Destaques da Semana</h2>
-      <div class="carrossel" id="carrossel-filmes">
-        <!-- Itens do carrossel de filmes -->
-        <div class="item" onclick="openModal('inception')">
-          <img src="https://upload.wikimedia.org/wikipedia/pt/a/a5/Inception_2010_film_poster.jpg" alt="Inception">
-          <h3>Inception</h3>
-          <div class="sinopse">Um ladrão especializado em extrair segredos de sonhos.</div>
-          <div class="classificacao">12+</div>
+    <!-- Destaque Principal -->
+    <section class="pt-24 pb-10 px-6 bg-gradient-to-b from-gray-900 to-black">
+        <div class="container mx-auto flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">Oppenheimer</h2>
+                <p class="text-lg md:text-xl mb-6">A história do cientista J. Robert Oppenheimer e seu papel no desenvolvimento da bomba atômica.</p>
+                <div class="flex space-x-4">
+                    <button class="bg-white text-black px-6 py-2 rounded flex items-center">
+                        <i class="fas fa-play mr-2"></i> Assistir
+                    </button>
+                    <button class="bg-gray-600 bg-opacity-70 text-white px-6 py-2 rounded flex items-center">
+                        <i class="fas fa-info-circle mr-2"></i> Mais Info
+                    </button>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" 
+                     alt="Pôster do filme Oppenheimer" class="rounded-lg shadow-2xl w-full max-w-md">
+            </div>
         </div>
-        <div class="item" onclick="openModal('matrix')">
-          <img src="https://upload.wikimedia.org/wikipedia/pt/c/c1/The_Matrix_Poster.jpg" alt="The Matrix">
-          <h3>The Matrix</h3>
-          <div class="sinopse">A batalha entre a humanidade e a realidade virtual.</div>
-          <div class="classificacao">16+</div>
+    </section>
+
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto px-4 py-8 mt-8">
+        <!-- Populares -->
+        <section class="mb-12">
+            <h3 class="text-2xl font-bold mb-4 section-title">Populares na CINEFLIX</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(1)">
+                    <img src="https://image.tmdb.org/t/p/w500/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg" 
+                         alt="Pôster de Barbie" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(2)">
+                    <img src="https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" 
+                         alt="Pôster de Oppenheimer" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(3)">
+                    <img src="https://image.tmdb.org/t/p/w500/iwiMf8x2jq6eUTeEmQUNCXKAAj3.jpg" 
+                         alt="Pôster de Guardiões da Galáxia Vol. 3" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(4)">
+                    <img src="https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg" 
+                         alt="Pôster de John Wick 4" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(5)">
+                    <img src="https://image.tmdb.org/t/p/w500/8FhKnPpMLzQ6AAnEOFOhQYLwT1.jpg" 
+                         alt="Pôster de Super Mario Bros" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(6)">
+                    <img src="https://image.tmdb.org/t/p/w500/b9UCfDzwiWw7mIFsIQR9ZJUeh7q.jpg" 
+                         alt="Pôster de Avatar: O Caminho da Água" class="w-full h-auto">
+                </div>
+            </div>
+        </section>
+
+        <!-- Continuar Assistindo -->
+        <section class="mb-12">
+            <h3 class="text-2xl font-bold mb-4 section-title">Continuar Assistindo</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(7)">
+                    <img src="https://image.tmdb.org/t/p/w500/n0ybibhJtQ5icDqTp8eRytcIHJx.jpg" 
+                         alt="Pôster de Velozes e Furiosos 10" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(8)">
+                    <img src="https://image.tmdb.org/t/p/w500/pAkQ8IbcRiy7pCTUsh6mwEEgb14.jpg" 
+                         alt="Pôster de Homem-Aranha: Através do Aranhaverso" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(9)">
+                    <img src="https://image.tmdb.org/t/p/w500/b9UCfDzwiWw7mIFsIQR9ZJUeh7q.jpg" 
+                         alt="Pôster de Avatar: O Caminho da Água" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(10)">
+                    <img src="https://image.tmdb.org/t/p/w500/8aTXqPQVYasf3hQs8zqTlPgMyC.jpg" 
+                         alt="Pôster de A Pequena Sereia" class="w-full h-auto">
+                </div>
+            </div>
+        </section>
+
+        <!-- Em Alta -->
+        <section class="mb-12">
+            <h3 class="text-2xl font-bold mb-4 section-title">Em Alta</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(11)">
+                    <img src="https://image.tmdb.org/t/p/w500/8kJq3BhTfQ7dfkuLmbpxsOj4QXc.jpg" 
+                         alt="Pôster de Besouro Azul" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(12)">
+                    <img src="https://image.tmdb.org/t/p/w500/eTvN54pd83TrSEOz6wbsXEJktCV.jpg" 
+                         alt="Pôster de A Freira 2" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(13)">
+                    <img src="https://image.tmdb.org/t/p/w500/9mprVUhGDGN9wO7Wp4iOuHp6UF2.jpg" 
+                         alt="Pôster de Missão: Impossível" class="w-full h-auto">
+                </div>
+                <div class="movie-card rounded overflow-hidden" onclick="openMovieModal(14)">
+                    <img src="https://image.tmdb.org/t/p/w500/8GnW6Q7q6r8X6L6VgTcKNPcPOrR.jpg" 
+                         alt="Pôster de Transformers: O Despertar das Feras" class="w-full h-auto">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content p-8 max-w-md mx-auto">
+            <span class="close-button float-right text-2xl cursor-pointer" onclick="closeModal('loginModal')">&times;</span>
+            <h2 class="text-2xl font-bold mb-6 text-center">Entrar na CINEFLIX</h2>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <input type="email" placeholder="Email" class="w-full p-3 bg-gray-700 rounded" required>
+                </div>
+                <div>
+                    <input type="password" placeholder="Senha" class="w-full p-3 bg-gray-700 rounded" required>
+                </div>
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded">
+                    Entrar
+                </button>
+            </form>
+            <p class="mt-4 text-center text-gray-400">
+                Não tem uma conta? <a href="#" class="text-red-500 hover:underline">Registre-se</a>
+            </p>
         </div>
-        <div class="item" onclick="openModal('interstellar')">
-          <img src="https://upload.wikimedia.org/wikipedia/pt/b/bb/Interstellar_film_poster.jpg" alt="Interstellar">
-          <h3>Interstellar</h3>
-          <div class="sinopse">Exploração do espaço e viagem no tempo.</div>
-          <div class="classificacao">12+</div>
-        </div>
-        <div class="item" onclick="openModal('darkknight')">
-          <img src="https://upload.wikimedia.org/wikipedia/pt/c/c4/The_Dark_Knight_poster.jpg" alt="The Dark Knight">
-          <h3>The Dark Knight</h3>
-          <div class="sinopse">Batman enfrenta o Coringa em Gotham City.</div>
-          <div class="classificacao">12+</div>
-        </div>
-        <div class="item" onclick="openModal('madmax')">
-          <img src="https://upload.wikimedia.org/wikipedia/pt/f/f9/Mad_Max_Fury_Road.jpg" alt="Mad Max: Fury Road">
-          <h3>Mad Max: Fury Road</h3>
-          <div class="sinopse">A luta pela sobrevivência em um mundo pós-apocalíptico.</div>
-          <div class="classificacao">16+</div>
-        </div>
-        <div class="item" onclick="openModal('avengers')">
-          <img src="https://upload.wikimedia.org/wikipedia/pt/4/45/The_Avengers_2012_poster.jpg" alt="Avengers">
-          <h3>Avengers</h3>
-          <div class="sinopse">Os heróis mais poderosos da Terra unidos.</div>
-          <div class="classificacao">12+</div>
-        </div>
-      </div>
     </div>
-  </main>
 
-  <!-- Formulário de Login -->
-  <div class="login-form" id="login-form" style="display: none;">
-    <h3>Login</h3>
-    <input type="text" placeholder="Usuário" id="usuario">
-    <input type="password" placeholder="Senha" id="senha">
-    <button onclick="login()">Entrar</button>
-  </div>
-
-  <!-- Modal de Filme -->
-  <div id="modal-inception" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('inception')">&times;</span>
-      <h2>Inception (2010)</h2>
-      <p><strong>Descrição:</strong> Um ladrão especializado em extrair segredos de sonhos.</p>
-      <p><strong>Classificação:</strong> 12+</p>
-      <iframe id="iframe-inception" src="https://www.youtube.com/embed/YoHD9XEInc0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <!-- Modal de Detalhes do Filme -->
+    <div id="movieModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button float-right text-3xl mr-4 mt-2 cursor-pointer text-white z-10 relative" onclick="closeModal('movieModal')">&times;</span>
+            <div class="relative">
+                <div id="movieTrailer" class="w-full h-96 bg-black">
+                    <!-- O trailer será carregado aqui -->
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="flex flex-col md:flex-row justify-between items-start mb-6">
+                    <div>
+                        <h2 id="movieTitle" class="text-3xl font-bold mb-2"></h2>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <span id="movieRating" class="bg-yellow-500 text-black px-2 py-1 rounded"></span>
+                            <span id="movieYear"></span>
+                            <span id="movieDuration"></span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 mt-4 md:mt-0">
+                        <button class="bg-white text-black px-4 py-2 rounded flex items-center">
+                            <i class="fas fa-play mr-2"></i> Assistir
+                        </button>
+                        <button class="bg-gray-600 bg-opacity-70 text-white px-4 py-2 rounded">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <p id="movieSynopsis" class="text-gray-300 mb-6"></p>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold mb-4">Elenco Principal</h3>
+                    <div id="movieCast" class="flex overflow-x-auto space-x-4 pb-4">
+                        <!-- Elenco será carregado aqui -->
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Comentários</h3>
+                    <div id="commentsSection">
+                        <div id="commentsList" class="space-y-4 mb-6">
+                            <!-- Comentários serão carregados aqui -->
+                        </div>
+                        <form id="commentForm" class="bg-gray-800 p-4 rounded">
+                            <h4 class="text-lg font-bold mb-2">Deixe seu comentário</h4>
+                            <textarea id="commentText" class="w-full p-3 bg-gray-700 rounded mb-2" rows="3" placeholder="Escreva seu comentário..."></textarea>
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+                                Enviar Comentário
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Outros modais (filmes) aqui... -->
+    <script>
+        // Dados dos filmes
+        const movies = {
+            1: {
+                title: "Barbie",
+                year: 2023,
+                duration: "1h 54min",
+                rating: "7.5/10",
+                synopsis: "Barbie começa a ter pensamentos estranhos e sua aparência muda, então ela precisa viajar para o mundo real para entender o que está acontecendo com ela.",
+                trailer: "https://www.youtube.com/embed/5f2p7u6v6v6",
+                cast: ["Margot Robbie", "Ryan Gosling", "America Ferrera"],
+                comments: [
+                    {user: "Ana Silva", text: "Adorei o filme! Muito divertido e com uma mensagem importante."},
+                    {user: "Carlos Oliveira", text: "As cores e a direção de arte são incríveis!"}
+                ]
+            },
+            2: {
+                title: "Oppenheimer",
+                year: 2023,
+                duration: "3h",
+                rating: "8.8/10",
+                synopsis: "A história do cientista J. Robert Oppenheimer e seu papel no desenvolvimento da bomba atômica durante a Segunda Guerra Mundial.",
+                trailer: "https://www.youtube.com/embed/4S9a5V9ODuY",
+                cast: ["Cillian Murphy", "Emily Blunt", "Matt Damon"],
+                comments: [
+                    {user: "Maria Santos", text: "Filme incrível! A atuação do Cillian Murphy é impressionante."},
+                    {user: "João Pereira", text: "Nolan mais uma vez mostra sua maestria no cinema."}
+                ]
+            },
+            3: {
+                title: "Guardiões da Galáxia Vol. 3",
+                year: 2023,
+                duration: "2h 30min",
+                rating: "8.2/10",
+                synopsis: "Os Guardiões devem proteger um dos seus enquanto exploram o passado conturbado de Rocket.",
+                trailer: "https://www.youtube.com/embed/2cv2ueYnKjg",
+                cast: ["Chris Pratt", "Zoe Saldana", "Dave Bautista"],
+                comments: [
+                    {user: "Pedro Almeida", text: "Emocionante e divertido, uma despedida perfeita!"},
+                    {user: "Laura Mendes", text: "Marvel ainda sabe fazer filmes incríveis quando quer."}
+                ]
+            }
+        };
 
-  <footer>
-    <p>© 2025 Cineflix</p>
-  </footer>
+        // Função para abrir o modal de filme
+        function openMovieModal(movieId) {
+            const movie = movies[movieId];
+            if (!movie) return;
+            
+            document.getElementById('movieTitle').textContent = movie.title;
+            document.getElementById('movieYear').textContent = movie.year;
+            document.getElementById('movieDuration').textContent = movie.duration;
+            document.getElementById('movieRating').textContent = movie.rating;
+            document.getElementById('movieSynopsis').textContent = movie.synopsis;
+            
+            // Carregar trailer
+            const trailerContainer = document.getElementById('movieTrailer');
+            trailerContainer.innerHTML = `
+                <iframe width="100%" height="100%" src="${movie.trailer}" 
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen></iframe>
+            `;
+            
+            // Carregar elenco
+            const castContainer = document.getElementById('movieCast');
+            castContainer.innerHTML = '';
+            movie.cast.forEach(actor => {
+                const actorEl = document.createElement('div');
+                actorEl.className = 'flex-shrink-0 w-24 text-center';
+                actorEl.innerHTML = `
+                    <div class="bg-gray-700 h-24 w-24 rounded-full mx-auto mb-2 overflow-hidden">
+                        <img src="https://placeholder-image-service.onrender.com/image/96x96?prompt=actor ${actor}&id=d6798b9d-594f-49d9-b390-cf324da7b42f" 
+                             alt="Foto de ${actor}" class="w-full h-full object-cover">
+                    </div>
+                    <p class="text-sm">${actor}</p>
+                `;
+                castContainer.appendChild(actorEl);
+            });
+            
+            // Carregar comentários
+            const commentsList = document.getElementById('commentsList');
+            commentsList.innerHTML = '';
+            movie.comments.forEach(comment => {
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment p-4 rounded';
+                commentEl.innerHTML = `
+                    <h4 class="font-bold">${comment.user}</h4>
+                    <p class="text-gray-300">${comment.text}</p>
+                `;
+                commentsList.appendChild(commentEl);
+            });
+            
+            document.getElementById('movieModal').style.display = 'block';
+        }
 
-  <script>
-    function openModal(movie) {
-      document.getElementById('modal-' + movie).style.display = "block";
-      document.getElementById('iframe-' + movie).src += "?autoplay=1"; // Inicia o vídeo automaticamente
-    }
+        // Função para fechar modais
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            
+            // Parar o vídeo ao fechar o modal
+            if (modalId === 'movieModal') {
+                const iframe = document.querySelector('#movieTrailer iframe');
+                if (iframe) {
+                    const iframeSrc = iframe.src;
+                    iframe.src = iframeSrc; // Recarregar para parar o vídeo
+                }
+            }
+        }
 
-    function closeModal(movie) {
-      document.getElementById('modal-' + movie).style.display = "none";
-      document.getElementById('iframe-' + movie).src = document.getElementById('iframe-' + movie).src.split('?')[0]; // Para o vídeo
-    }
+        // Event Listeners
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            document.getElementById('loginModal').style.display = 'block';
+        });
 
-    function toggleLoginForm() {
-      const loginForm = document.getElementById('login-form');
-      loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
-    }
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login realizado com sucesso!');
+            document.getElementById('loginModal').style.display = 'none';
+        });
 
-    function login() {
-      alert("Login realizado com sucesso!");
-    }
-  </script>
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const commentText = document.getElementById('commentText').value;
+            if (commentText.trim()) {
+                alert('Comentário enviado com sucesso!');
+                document.getElementById('commentText').value = '';
+            }
+        });
 
+        // Fechar modal ao clicar fora dele
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                closeModal(e.target.id);
+            }
+        });
+
+        // Mudar navbar ao scrollar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
